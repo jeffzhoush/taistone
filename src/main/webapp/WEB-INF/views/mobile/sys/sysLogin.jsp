@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Jeesite Mobile 登录</title>
+		<title>Taistone Mobile 登录</title>
 		<%@include file="/WEB-INF/views/mobile/include/head.jsp" %>
 		<script type="text/javascript">
 			$(document).ready(function(){
@@ -28,7 +28,7 @@
 	<div data-role="page">
 		<%String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);%>
 		<div data-role="header"  data-theme="b">
-			<h1>Jeesite 登陆</h1>
+			<h1>Taistone 登陆</h1>
 		</div><!-- /header -->
 		<div role="main" class="ui-content">
 			<div id="messageBox" class="<%=error==null?"hide":""%>">
@@ -49,7 +49,7 @@
 			</form>
 		</div><!-- /content -->
 		<div data-role="footer"  data-theme="b">
-			<h4>Copyright 2013 The Jeesite Foundation</h4>
+			<h4>Copyright 2014 The Taistone </h4>
 		</div><!-- /footer -->
 	</div><!-- /page -->
 	</body>
