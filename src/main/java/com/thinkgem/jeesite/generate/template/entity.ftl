@@ -21,6 +21,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
+import com.thinkgem.jeesite.common.persistence.IdEntity;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
@@ -31,10 +32,10 @@ import com.thinkgem.jeesite.modules.sys.entity.User;
 @Entity
 @Table(name = "${tableName}")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ${ClassName} extends DataEntity {
+public class ${ClassName} extends IdEntity<${ClassName}> {
 	
 	private static final long serialVersionUID = 1L;
-	private String id; 		// 编号
+
 	private String name; 	// 名称
 
 	public ${ClassName}() {
@@ -46,17 +47,6 @@ public class ${ClassName} extends DataEntity {
 		this.id = id;
 	}
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_${tableName}")
-	//@SequenceGenerator(name = "seq_${tableName}", sequenceName = "seq_${tableName}")
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	@Length(min=1, max=200)
 	public String getName() {

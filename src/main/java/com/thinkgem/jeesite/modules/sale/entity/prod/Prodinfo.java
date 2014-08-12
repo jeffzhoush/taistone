@@ -22,29 +22,30 @@ import org.hibernate.validator.constraints.Length;
 
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 import com.thinkgem.jeesite.common.persistence.IdEntity;
-import com.thinkgem.jeesite.modules.prj.entity.Project;
+import com.thinkgem.jeesite.common.utils.excel.annotation.ExcelField;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
- * 产品Entity
- * @author JeffZhou
- * @version 2014-08-03
+ * 商品信息Entity
+ * @author jeff.zhou
+ * @version 2014-08-06
  */
 @Entity
 @Table(name = "sale_prod_prodinfo")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Prodinfo extends IdEntity<Prodinfo> {
 	
 	private static final long serialVersionUID = 1L;
-//	private String id; 		// 编号
-	private String name; 	// 名称
 
-	private Double forwarderprice;
-	private Double storeprice;
-	private Double twosalesprice;
-	private Double creditprice;
-	private Integer salesorder;
+	private String name; 	// 名称
 	
-	
+	private String lv5id; // 产品编码
+	private Double forwarderprice; // 出车价
+	private Double storeprice; // 现销价 
+	private Double twosalesprice; // 二批价 
+	private Double creditprice; // 赊销价 
+	private Integer salesorder ; // 排序 
+
 	public Prodinfo() {
 		super();
 	}
@@ -53,20 +54,9 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this();
 		this.id = id;
 	}
-	
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sale_prod_prodinfo")
-	//@SequenceGenerator(name = "seq_sale_prod_prodinfo", sequenceName = "seq_sale_prod_prodinfo")
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}*/
 
 	@Length(min=1, max=200)
+	@ExcelField(title="名称", align=2, sort=10)
 	public String getName() {
 		return name;
 	}
@@ -75,6 +65,16 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.name = name;
 	}
 
+	@ExcelField(title="产品编码", align=2, sort=20)
+	public String getLv5id() {
+		return lv5id;
+	}
+
+	public void setLv5id(String lv5id) {
+		this.lv5id = lv5id;
+	}
+
+	@ExcelField(title="出车价", align=2, sort=30)
 	public Double getForwarderprice() {
 		return forwarderprice;
 	}
@@ -83,6 +83,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.forwarderprice = forwarderprice;
 	}
 
+	@ExcelField(title="现销价", align=2, sort=40)
 	public Double getStoreprice() {
 		return storeprice;
 	}
@@ -91,6 +92,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.storeprice = storeprice;
 	}
 
+	@ExcelField(title="二批价 ", align=2, sort=50)
 	public Double getTwosalesprice() {
 		return twosalesprice;
 	}
@@ -99,6 +101,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.twosalesprice = twosalesprice;
 	}
 
+	@ExcelField(title="赊销价 ", align=2, sort=60)
 	public Double getCreditprice() {
 		return creditprice;
 	}

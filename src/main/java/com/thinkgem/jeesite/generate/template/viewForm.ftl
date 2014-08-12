@@ -20,6 +20,9 @@
 					} else {
 						error.insertAfter(element);
 					}
+				},
+				rules:{
+					name:{required:true,maxlength:255}
 				}
 			});
 		});
@@ -36,7 +39,7 @@
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="200" class="required"/>
+				<form:input path="name" htmlEscape="false" maxlength="200" />
 			</div>
 		</div>
 		<div class="control-group">

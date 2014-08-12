@@ -8,13 +8,16 @@ import org.springframework.stereotype.Repository;
 import com.thinkgem.jeesite.common.persistence.BaseDao;
 import com.thinkgem.jeesite.common.persistence.Parameter;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
- * 产品DAO接口
- * @author JeffZhou
- * @version 2014-08-03
+ * 商品信息DAO接口
+ * @author jeff.zhou
+ * @version 2014-08-06
  */
 @Repository
 public class ProdinfoDao extends BaseDao<Prodinfo> {
-	
+	public Prodinfo findByName(String name){
+		  return getByHql("from Prodinfo where name = :p1 and delFlag = :p2", new Parameter(name, Prodinfo.DEL_FLAG_NORMAL));
+	}
 }

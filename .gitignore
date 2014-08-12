@@ -8,9 +8,13 @@
 .rar
 .idea
 *.iml
+.classpath
+.project
+.settings
 .settings/*
 /indexes/*
 /target/*
 /src/main/webapp/WEB-INF/classes/*
+/src/main/webapp/WEB-INF/lib/*
 /src/main/webapp/userfiles/*
 /target

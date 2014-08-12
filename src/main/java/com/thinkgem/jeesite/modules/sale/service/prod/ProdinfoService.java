@@ -15,11 +15,12 @@ import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
 import com.thinkgem.jeesite.modules.sale.dao.prod.ProdinfoDao;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
- * 产品Service
- * @author JeffZhou
- * @version 2014-08-03
+ * 商品信息Service
+ * @author jeff.zhou
+ * @version 2014-08-06
  */
 @Component
 @Transactional(readOnly = true)
@@ -38,7 +39,8 @@ public class ProdinfoService extends BaseService {
 			dc.add(Restrictions.like("name", "%"+prodinfo.getName()+"%"));
 		}
 		dc.add(Restrictions.eq(Prodinfo.FIELD_DEL_FLAG, Prodinfo.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.desc("id"));
+		
+		//dc.addOrder(Order.desc("id"));
 		return prodinfoDao.find(page, dc);
 	}
 	
@@ -51,5 +53,10 @@ public class ProdinfoService extends BaseService {
 	public void delete(String id) {
 		prodinfoDao.deleteById(id);
 	}
+	
+	@Transactional(readOnly = false)
+	 public Prodinfo getByName(String name) {
+	  return prodinfoDao.findByName(name);
+	 }
 	
 }

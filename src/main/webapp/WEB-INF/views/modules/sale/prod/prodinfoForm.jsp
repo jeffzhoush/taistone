@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>产品管理</title>
+	<title>商品信息管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -20,15 +20,22 @@
 					} else {
 						error.insertAfter(element);
 					}
-				}
+				},
+				rules:{
+					name:{required:true,maxlength:255,remote: "${ctx}/sale/prod/prodinfo/checkNameUnique?oldName=" + encodeURIComponent('${prodinfo.name}')},
+					salesorder:{required:true,digits:true}
+				},
+			    messages: {
+			        name: {remote: "相同名称已存在."},
+			       }
 			});
 		});
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sale/prod/prodinfo/">产品列表</a></li>
-		<li class="active"><a href="${ctx}/sale/prod/prodinfo/form?id=${prodinfo.id}">产品<shiro:hasPermission name="sale:prod:prodinfo:edit">${not empty prodinfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:prod:prodinfo:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/sale/prod/prodinfo/">商品信息列表</a></li>
+		<li class="active"><a href="${ctx}/sale/prod/prodinfo/form?id=${prodinfo.id}">商品信息<shiro:hasPermission name="sale:prod:prodinfo:edit">${not empty prodinfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:prod:prodinfo:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="prodinfo" action="${ctx}/sale/prod/prodinfo/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,39 +43,44 @@
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="200" class="required"/>
+				<form:input path="name" htmlEscape="false" maxlength="200"  />
 			</div>
 		</div>
 		
-		
+		<div class="control-group">
+			<label class="control-label">产品编码:</label>
+			<div class="controls">
+				<form:input path="lv5id" htmlEscape="false" maxlength="20"  />
+			</div>
+		</div>
 		<div class="control-group">
 			<label class="control-label">出车价:</label>
 			<div class="controls">
-				<form:input path="forwarderprice" htmlEscape="false" maxlength="10" />
+				<form:input path="forwarderprice" htmlEscape="false" maxlength="20"   />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">现销价:</label>
+			<label class="control-label">现销价 :</label>
 			<div class="controls">
-				<form:input path="storeprice" htmlEscape="false" maxlength="10" />
+				<form:input path="storeprice" htmlEscape="false" maxlength="20"   />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">二批价:</label>
 			<div class="controls">
-				<form:input path="twosalesprice" htmlEscape="false" maxlength="10" />
+				<form:input path="twosalesprice" htmlEscape="false" maxlength="20"   />
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">赊销价:</label>
+			<label class="control-label">赊销价 :</label>
 			<div class="controls">
-				<form:input path="creditprice" htmlEscape="false" maxlength="10" />
+				<form:input path="creditprice" htmlEscape="false"  maxlength="20"  />
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">排序:</label>
 			<div class="controls">
-				<form:input path="salesorder" htmlEscape="false" maxlength="2" />
+				<form:input path="salesorder" htmlEscape="false" maxlength="20"   />
 			</div>
 		</div>
 		
