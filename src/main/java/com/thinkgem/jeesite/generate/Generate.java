@@ -43,10 +43,10 @@ public class Generate {
 		String packageName = "com.thinkgem.jeesite.modules";
 		
 		String moduleName = "sale";			// 模块名，例：sys
-		String subModuleName = "market";				// 子模块名（可选） 
-		String className = "applicationstoredisplay";			// 类名，例：user
+		String subModuleName = "prod";				// 子模块名（可选） 
+		String className = "prodgroup";			// 类名，例：user
 		String classAuthor = "jeff.zhou";		// 类作者，例：ThinkGem
-		String functionName = "特陈计划";			// 功能名，例：用户
+		String functionName = "商品类型";			// 功能名，例：用户
 
 		// 是否启用生成工具
 		Boolean isEnable = true;			

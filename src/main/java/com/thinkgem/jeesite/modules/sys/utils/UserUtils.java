@@ -21,6 +21,8 @@ import org.hibernate.sql.JoinType;
 import com.google.common.collect.Maps;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.SpringContextHolder;
+import com.thinkgem.jeesite.modules.sale.dao.prod.ProdgroupDao;
+import com.thinkgem.jeesite.modules.sale.entity.prod.Prodgroup;
 import com.thinkgem.jeesite.modules.sys.dao.AreaDao;
 import com.thinkgem.jeesite.modules.sys.dao.MenuDao;
 import com.thinkgem.jeesite.modules.sys.dao.OfficeDao;
@@ -45,12 +47,14 @@ public class UserUtils extends BaseService {
 	private static MenuDao menuDao = SpringContextHolder.getBean(MenuDao.class);
 	private static AreaDao areaDao = SpringContextHolder.getBean(AreaDao.class);
 	private static OfficeDao officeDao = SpringContextHolder.getBean(OfficeDao.class);
+	private static ProdgroupDao prodgroupDao = SpringContextHolder.getBean(ProdgroupDao.class);
 
 	public static final String CACHE_USER = "user";
 	public static final String CACHE_ROLE_LIST = "roleList";
 	public static final String CACHE_MENU_LIST = "menuList";
 	public static final String CACHE_AREA_LIST = "areaList";
 	public static final String CACHE_OFFICE_LIST = "officeList";
+	public static final String CACHE_PRODGROUP_LIST = "prodgroupList";
 	
 	public static User getUser(){
 		User user = (User)getCache(CACHE_USER);
@@ -154,6 +158,22 @@ public class UserUtils extends BaseService {
 			putCache(CACHE_OFFICE_LIST, officeList);
 		}
 		return officeList;
+	}
+	
+	// Prodgroup列表
+	public static List<Prodgroup> getProdgroupList(){
+		@SuppressWarnings("unchecked")
+		List<Prodgroup> prodgroupList = (List<Prodgroup>)getCache(CACHE_PRODGROUP_LIST);
+		if (prodgroupList == null){
+			User user = getUser();
+			DetachedCriteria dc = prodgroupDao.createDetachedCriteria();
+			dc.add(dataScopeFilter(user, dc.getAlias(), ""));
+			dc.add(Restrictions.eq("delFlag", Prodgroup.DEL_FLAG_NORMAL));
+			dc.addOrder(Order.asc("code"));
+			prodgroupList = prodgroupDao.find(dc);
+			putCache(CACHE_PRODGROUP_LIST, prodgroupList);
+		}
+		return prodgroupList;
 	}
 	
 

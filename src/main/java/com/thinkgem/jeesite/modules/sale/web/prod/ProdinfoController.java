@@ -33,7 +33,10 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite.modules.sale.dao.prod.ProdgroupDao;
+import com.thinkgem.jeesite.modules.sale.entity.prod.Prodgroup;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
+import com.thinkgem.jeesite.modules.sale.service.prod.ProdgroupService;
 import com.thinkgem.jeesite.modules.sale.service.prod.ProdinfoService;
 
 /**
@@ -47,6 +50,9 @@ public class ProdinfoController extends BaseController {
 
 	@Autowired
 	private ProdinfoService prodinfoService;
+	
+	@Autowired
+	private ProdgroupService prodgroupService;
 	
 	@ModelAttribute
 	public Prodinfo get(@RequestParam(required=false) String id) {
@@ -78,7 +84,10 @@ public class ProdinfoController extends BaseController {
 
 	@RequiresPermissions("sale:prod:prodinfo:edit")
 	@RequestMapping(value = "save")
-	public String save(Prodinfo prodinfo, Model model, RedirectAttributes redirectAttributes) {
+	public String save(Prodinfo prodinfo, Model model, RedirectAttributes redirectAttributes,HttpServletRequest request) {
+		Prodgroup prodgroup=prodgroupService.get(request.getParameter("prodinfo.prodgroup.id"));
+		prodinfo.setProdgroup(prodgroup);
+		
 		if (!beanValidator(model, prodinfo)){
 			return form(prodinfo, model);
 		}
@@ -112,7 +121,7 @@ public class ProdinfoController extends BaseController {
     @RequestMapping(value = "export", method=RequestMethod.POST)
     public String exportFile(Prodinfo prodinfo, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
-            String fileName = "用户数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx"; 
+            String fileName = "商品信息数据"+DateUtils.getDate("yyyyMMddHHmmss")+".xlsx"; 
     		//Page<User> page = systemService.findUser(new Page<User>(request, response, -1), user); 
     		Page<Prodinfo> page = prodinfoService.find(new Page<Prodinfo>(request, response), prodinfo); 
     		new ExportExcel("商品信息数据", Prodinfo.class).setDataList(page.getList()).write(response, fileName).dispose();

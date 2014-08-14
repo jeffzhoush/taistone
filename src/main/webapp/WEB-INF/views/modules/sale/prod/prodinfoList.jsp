@@ -80,7 +80,7 @@
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th class="sort name">名称</th> <th class="sort lv5id">产品编码</th> <th>出车价</th> <th>现销价 </th> <th>二批价 </th> <th>赊销价</th> <th>排序</th> 
+		<thead><tr><th class="sort name">名称</th> <th class="sort lv5id">产品编码</th> <th>商品类型</th> <th>出车价</th> <th>现销价 </th> <th>二批价 </th> <th>赊销价</th> <th>排序</th> 
 		<th>备注</th><shiro:hasPermission name="sale:prod:prodinfo:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="prodinfo">
@@ -88,6 +88,7 @@
 				<td><a href="${ctx}/sale/prod/prodinfo/form?id=${prodinfo.id}">${prodinfo.name}</a></td>
 				
 				<td>${prodinfo.lv5id}</td>
+				<td>${prodinfo.prodgroup.name}</td>
 				<td>${prodinfo.forwarderprice}</td>
 				<td>${prodinfo.storeprice}</td>
 				<td>${prodinfo.twosalesprice}</td>

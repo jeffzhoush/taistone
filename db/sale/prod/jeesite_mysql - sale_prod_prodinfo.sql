@@ -20,6 +20,7 @@ CREATE TABLE sale_prod_prodinfo
 	id varchar(64) NOT NULL COMMENT '编号',
 	name varchar(255) COMMENT '名称',
 	lv5id varchar(255) COMMENT '产品编码',
+	prodgroup_id varchar(64) COMMENT '商品类型',
 	forwarderprice numeric(18,4) COMMENT '出车价',
  	storeprice numeric(18,4) COMMENT '现销价',
 	twosalesprice numeric(18,4) COMMENT '二批价',

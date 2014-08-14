@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>产品层级管理</title>
+	<title>商品类型管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,31 +27,35 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sale/prod/prodgroup/">产品层级列表</a></li>
-		<li class="active"><a href="${ctx}/sale/prod/prodgroup/form?id=${prodgroup.id}">产品层级<shiro:hasPermission name="sale:prod:prodgroup:edit">${not empty prodgroup.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:prod:prodgroup:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/sale/prod/prodgroup/">商品类型列表</a></li>
+		<li class="active"><a href="form?id=${prodgroup.id}&parent.id=${prodgroup.parent.id}">商品类型<shiro:hasPermission name="sale:prod:prodgroup:edit">${not empty prodgroup.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:prod:prodgroup:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="prodgroup" action="${ctx}/sale/prod/prodgroup/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
-		
 		<div class="control-group">
-			<label class="control-label">上级:</label>
+			<label class="control-label">上级商品类型:</label>
 			<div class="controls">
-                <tags:treeselect id="prodgroup" name="parent.id" value="${prodgroup.parent.id}" labelName="parent.name" labelValue="${prodgroup.parent.name}"
-					title="产品层级" url="/sale/prod/prodgroup/treeData" extId="${prodgroup.id}" cssClass="required"/>
+				<tags:treeselect id="prodgroup" name="parent.id" value="${prodgroup.parent.id}" labelName="parent.name" labelValue="${prodgroup.parent.name}"
+					title="商品类型" url="/sale/prod/prodgroup/treeData" extId="${prodgroup.id}" cssClass="required"/>
 			</div>
 		</div>
-		
 		<div class="control-group">
-			<label class="control-label">名称:</label>
+			<label class="control-label">商品类型名称:</label>
 			<div class="controls">
-				<form:input path="name" htmlEscape="false" maxlength="200" class="required"/>
+				<form:input path="name" htmlEscape="false" maxlength="50" class="required"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">排序:</label>
+			<div class="controls">
+				<form:input path="code" htmlEscape="false" maxlength="50"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="200" class="input-xxlarge"/>
+				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="form-actions">

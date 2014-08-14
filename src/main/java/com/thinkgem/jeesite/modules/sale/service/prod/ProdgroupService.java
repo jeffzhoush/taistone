@@ -5,25 +5,19 @@ package com.thinkgem.jeesite.modules.sale.service.prod;
 
 import java.util.List;
 
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
-import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodgroup;
 import com.thinkgem.jeesite.modules.sale.dao.prod.ProdgroupDao;
-import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
- * 产品层级Service
- * @author JeffZhou
- * @version 2014-08-03
+ * 商品类型Service
+ * @author jeff.zhou
+ * @version 2014-08-12
  */
 @Component
 @Transactional(readOnly = true)
@@ -36,28 +30,30 @@ public class ProdgroupService extends BaseService {
 		return prodgroupDao.get(id);
 	}
 	
-	public Page<Prodgroup> find(Page<Prodgroup> page, Prodgroup prodgroup) {
-		DetachedCriteria dc = prodgroupDao.createDetachedCriteria();
-		if (StringUtils.isNotEmpty(prodgroup.getName())){
-			dc.add(Restrictions.like("name", "%"+prodgroup.getName()+"%"));
-		}
-		dc.add(Restrictions.eq(Prodgroup.FIELD_DEL_FLAG, Prodgroup.DEL_FLAG_NORMAL));
-		dc.addOrder(Order.desc("id"));
-		return prodgroupDao.find(page, dc);
+	public List<Prodgroup> findAll(){
+		return prodgroupDao.findAllList();
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(Prodgroup prodgroup) {
+		prodgroup.setParent(this.get(prodgroup.getParent().getId()));
+		String oldParentIds = prodgroup.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
+		prodgroup.setParentIds(prodgroup.getParent().getParentIds()+prodgroup.getParent().getId()+",");
+		prodgroupDao.clear();
 		prodgroupDao.save(prodgroup);
+		// 更新子节点 parentIds
+		List<Prodgroup> list = prodgroupDao.findByParentIdsLike("%,"+prodgroup.getId()+",%");
+		for (Prodgroup e : list){
+			e.setParentIds(e.getParentIds().replace(oldParentIds, prodgroup.getParentIds()));
+		}
+		prodgroupDao.save(list);
+		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(String id) {
-		prodgroupDao.deleteById(id);
-	}
-	
-	public List<Prodgroup> findAllProdgroup(){
-		return prodgroupDao.findAllList();
+		prodgroupDao.deleteById(id, "%,"+id+",%");
+		UserUtils.removeCache(UserUtils.CACHE_AREA_LIST);
 	}
 	
 }

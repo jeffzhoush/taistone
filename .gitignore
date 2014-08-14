@@ -8,9 +8,6 @@
 .rar
 .idea
 *.iml
-.classpath
-.project
-.settings
 .settings/*
 /indexes/*
 /target/*

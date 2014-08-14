@@ -53,6 +53,16 @@
 				<form:input path="lv5id" htmlEscape="false" maxlength="20"  />
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">商品类型:</label>
+			<div class="controls">
+                <tags:treeselect id="prodgroup" name="prodinfo.prodgroup.id" value="${prodinfo.prodgroup.id}" labelName="prodinfo.prodgroup.name" labelValue="${prodinfo.prodgroup.name}"
+					title="商品类型" url="/sale/prod/prodgroup/treeData" cssClass="required"/>
+			</div>
+		</div>
+		
+		
 		<div class="control-group">
 			<label class="control-label">出车价:</label>
 			<div class="controls">

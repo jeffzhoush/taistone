@@ -26,16 +26,15 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
-import com.thinkgem.jeesite.modules.sys.entity.Menu;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodgroup;
 import com.thinkgem.jeesite.modules.sale.service.prod.ProdgroupService;
 
 /**
- * 产品层级Controller
- * @author JeffZhou
- * @version 2014-08-03
+ * 商品类型Controller
+ * @author jeff.zhou
+ * @version 2014-08-12
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sale/prod/prodgroup")
@@ -52,13 +51,20 @@ public class ProdgroupController extends BaseController {
 			return new Prodgroup();
 		}
 	}
-	
+
 	@RequiresPermissions("sale:prod:prodgroup:view")
 	@RequestMapping(value = {"list", ""})
-	public String list(Prodgroup prodgroup, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String list(Prodgroup prodgroup, Model model) {
+//		User user = UserUtils.getUser();
+//		if(user.isAdmin()){
+			prodgroup.setId("1");
+//		}else{
+//			prodgroup.setId(user.getProdgroup().getId());
+//		}
+		model.addAttribute("prodgroup", prodgroup);
 		List<Prodgroup> list = Lists.newArrayList();
-		List<Prodgroup> sourcelist = prodgroupService.findAllProdgroup();
-		Prodgroup.sortList(list, sourcelist, "1");
+		List<Prodgroup> sourcelist = prodgroupService.findAll();
+		Prodgroup.sortList(list, sourcelist, prodgroup.getId());
         model.addAttribute("list", list);
 		return "modules/sale/prod/prodgroupList";
 	}
@@ -67,49 +73,61 @@ public class ProdgroupController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Prodgroup prodgroup, Model model) {
 		if (prodgroup.getParent()==null||prodgroup.getParent().getId()==null){
-			prodgroup.setParent(new Prodgroup("1"));
+			Prodgroup root=new Prodgroup();
+			root.setId("1");
+			root.setParentIds("0,");
+			prodgroup.setParent(root);
 		}
 		prodgroup.setParent(prodgroupService.get(prodgroup.getParent().getId()));
 		model.addAttribute("prodgroup", prodgroup);
 		return "modules/sale/prod/prodgroupForm";
 	}
-
+	
 	@RequiresPermissions("sale:prod:prodgroup:edit")
 	@RequestMapping(value = "save")
 	public String save(Prodgroup prodgroup, Model model, RedirectAttributes redirectAttributes) {
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup";
+		}
 		if (!beanValidator(model, prodgroup)){
 			return form(prodgroup, model);
 		}
 		prodgroupService.save(prodgroup);
-		addMessage(redirectAttributes, "保存产品层级'" + prodgroup.getName() + "'成功");
-		return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup/?repage";
+		addMessage(redirectAttributes, "保存区域'" + prodgroup.getName() + "'成功");
+		return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup/";
 	}
 	
 	@RequiresPermissions("sale:prod:prodgroup:edit")
 	@RequestMapping(value = "delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
-		if (Prodgroup.isRoot(id)){
-			addMessage(redirectAttributes, "删除产品层级失败, 不允许删除顶级编号为空");
+		if(Global.isDemoMode()){
+			addMessage(redirectAttributes, "演示模式，不允许操作！");
+			return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup";
+		}
+		if (Prodgroup.isAdmin(id)){
+			addMessage(redirectAttributes, "删除区域失败, 不允许删除顶级区域或编号为空");
 		}else{
 			prodgroupService.delete(id);
-			addMessage(redirectAttributes, "删除产品层级成功");
+			addMessage(redirectAttributes, "删除区域成功");
 		}
-		
-		return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup/?repage";
+		return "redirect:"+Global.getAdminPath()+"/sale/prod/prodgroup/";
 	}
-	
+
 	@RequiresUser
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) Long extId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String extId, HttpServletResponse response) {
 		response.setContentType("application/json; charset=UTF-8");
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<Prodgroup> list = prodgroupService.findAllProdgroup();
+//		User user = UserUtils.getUser();
+		List<Prodgroup> list = prodgroupService.findAll();
 		for (int i=0; i<list.size(); i++){
 			Prodgroup e = list.get(i);
 			if (extId == null || (extId!=null && !extId.equals(e.getId()) && e.getParentIds().indexOf(","+extId+",")==-1)){
 				Map<String, Object> map = Maps.newHashMap();
 				map.put("id", e.getId());
+//				map.put("pId", !user.isAdmin()&&e.getId().equals(user.getProdgroup().getId())?0:e.getParent()!=null?e.getParent().getId():0);
 				map.put("pId", e.getParent()!=null?e.getParent().getId():0);
 				map.put("name", e.getName());
 				mapList.add(map);
@@ -117,5 +135,4 @@ public class ProdgroupController extends BaseController {
 		}
 		return mapList;
 	}
-
 }
