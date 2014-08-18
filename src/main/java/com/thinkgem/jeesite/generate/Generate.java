@@ -39,14 +39,14 @@ public class Generate {
 		// 主要提供基本功能模块代码生成。
 		// 目录生成结构：{packageName}/{moduleName}/{dao,entity,service,web}/{subModuleName}/{className}
 		
-		// packageName 包名，这里如果更改包名，请在applicationContext.xml和srping-mvc.xml中配置base-package、packagesToScan属性，来指定多个（共4处需要修改）。
-		String packageName = "com.thinkgem.jeesite.modules";
+		// packageName 包名，这里如果更改包名，请在applicationContext.xml和spring-mvc.xml中配置base-package、packagesToScan属性，来指定多个（共4处需要修改）。
+		String packageName = "com.demo";
 		
-		String moduleName = "sale";			// 模块名，例：sys
-		String subModuleName = "prod";				// 子模块名（可选） 
-		String className = "prodgroup";			// 类名，例：user
+		String moduleName = "sfd";			// 模块名，例：sys
+		String subModuleName = "";				// 子模块名（可选） 
+		String className = "workreport";			// 类名，例：user
 		String classAuthor = "jeff.zhou";		// 类作者，例：ThinkGem
-		String functionName = "商品类型";			// 功能名，例：用户
+		String functionName = "配送单";			// 功能名，例：用户
 
 		// 是否启用生成工具
 		Boolean isEnable = true;			
