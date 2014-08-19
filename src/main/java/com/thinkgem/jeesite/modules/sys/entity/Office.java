@@ -7,6 +7,7 @@ package com.thinkgem.jeesite.modules.sys.entity;
 
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;

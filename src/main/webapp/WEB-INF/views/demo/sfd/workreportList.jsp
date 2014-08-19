@@ -60,11 +60,12 @@
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>人员</th> <th>部门</th> <th>手机号</th> <th>汇报类型</th> <th>提交时间</th> <th>汇报内容</th> <th>照片</th>
+		<thead><tr><th>序号</th><th>人员</th> <th>部门</th> <th>手机号</th> <th>汇报类型</th> <th>提交时间</th> <th>汇报内容</th> <th>照片</th>
 		<th>备注</th><shiro:hasPermission name="sfd:workreport:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="workreport">
+		<c:forEach items="${page.list}" var="workreport" varStatus="status">
 			<tr>
+				<td>${ status.index + 1}</td>
 				<td><a href="${ctx}/sfd/workreport/form?id=${workreport.id}">${workreport.user.name}</a></td>
 				
 				<td>${workreport.user.office.name}</td>
