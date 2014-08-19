@@ -37,19 +37,30 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		
-		<label>类型：</label>
+		<label>开始时间：</label>
+			<input id="createDateStart"  name="createDateStart"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"  value="<fmt:formatDate value="${workreport.createDateStart}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
+		<label>结束时间：</label>
+			<input id="createDateEnd" name="createDateEnd" type="text" readonly="readonly" maxlength="20" class="input-small Wdate" value="<fmt:formatDate value="${workreport.createDateEnd}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
+			&nbsp;
+		
+		<label>汇报类型：</label>
 			<form:select path="reportType">
 					<form:option value="" label="请选择"/>
 					<form:options items="${fns:getDictList('sfd_workreport_report_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
-		&nbsp;&nbsp;
+				</form:select>&nbsp;
 		
-		<label>名称 ：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-small"/>
-		&nbsp;<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+		
+			<label>部门：</label><tags:treeselect id="office" name="user.office.id" value="${workreport.user.office.id}" labelName="user.office.name" labelValue="${workreport.user.office.name}" 
+				title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true"/>
+		
+		
+		<label>人员 ：</label><form:input path="user.name" htmlEscape="false" maxlength="50" class="input-small"/>&nbsp;
+		<label>手机号码 ：</label><form:input path="user.mobile" htmlEscape="false" maxlength="50" class="input-small"/>&nbsp;
+		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 	</form:form>
 	<tags:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>名称</th> <th>部门</th> <th>手机号</th> <th>汇报类型</th> <th>提交时间</th> <th>汇报内容</th> <th>照片</th>
+		<thead><tr><th>人员</th> <th>部门</th> <th>手机号</th> <th>汇报类型</th> <th>提交时间</th> <th>汇报内容</th> <th>照片</th>
 		<th>备注</th><shiro:hasPermission name="sfd:workreport:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="workreport">
