@@ -37,11 +37,77 @@
 		<form:hidden path="id"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
-			<label class="control-label">名称:</label>
+			<label class="control-label">配送单号:</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="200" />
 			</div>
 		</div>
+		
+		<div class="control-group">
+			<label class="control-label">合作商:</label>
+			<div class="controls">
+				<form:input path="supply.id"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">终端客户:</label>
+			<div class="controls">
+				<form:input path="customer"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">配送员:</label>
+			<div class="controls">
+				<form:input path="deliveruser.id"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">配送地址:</label>
+			<div class="controls">
+				<form:input path="address"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">配送品:</label>
+			<div class="controls">
+				<form:input path="prodinfo.id"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">终端联系人:</label>
+			<div class="controls">
+				<form:input path="linkman"  />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">联系电话:</label>
+			<div class="controls">
+				<form:input path="phone"  />
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">预约时间:</label>
+			<div class="controls">
+				<input id="orderTime" name="orderTime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${deliver.orderTime}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:true});"/>
+			</div>
+		</div>
+		
+		
+		
+		<div class="control-group">
+			<label class="control-label">状态:</label>
+			<div class="controls">
+				<form:select path="status">
+			     	<form:option value="" label="请选择"/>
+			     	<form:options items="${fns:getDictList('sfd_deliver_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+			    </form:select>
+			</div>
+		</div>
+		
+		
 		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">
