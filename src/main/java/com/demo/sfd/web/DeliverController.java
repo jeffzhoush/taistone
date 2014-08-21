@@ -24,6 +24,7 @@ import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
 import com.thinkgem.jeesite.modules.sale.service.cust.CustomerinfoService;
 import com.thinkgem.jeesite.modules.sale.service.prod.ProdinfoService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import com.demo.sfd.entity.Deliver;
 import com.demo.sfd.service.DeliverService;
@@ -44,6 +45,10 @@ public class DeliverController extends BaseController {
 	private ProdinfoService prodinfoService;	
 	@Autowired
 	private CustomerinfoService customerinfoService;
+	
+	@Autowired
+	private SystemService systemService; 
+	
 	
 	@ModelAttribute
 	public Deliver get(@RequestParam(required=false) String id) {
@@ -81,6 +86,9 @@ public class DeliverController extends BaseController {
 		
 		Customerinfo customerinfo =customerinfoService.get(request.getParameter("deliver.supply.id"));
 		deliver.setSupply(customerinfo);
+		
+		User deliveruser=systemService.getUser(request.getParameter("deliver.deliveruser.id"));
+		deliver.setDeliveruser(deliveruser);
 		
 		if (!beanValidator(model, deliver)){
 			return form(deliver, model);

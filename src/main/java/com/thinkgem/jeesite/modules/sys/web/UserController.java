@@ -68,6 +68,15 @@ public class UserController extends BaseController {
 		return "modules/sys/userList";
 	}
 
+	 //选择用户列表
+	 @RequiresPermissions("sys:user:view")
+	 @RequestMapping(value = "selectList")
+	 public String selectList(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
+	         list(user, request, response, model);
+	   return "modules/sys/userSelectList";
+	  }
+	
+	
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping(value = "form")
 	public String form(User user, Model model) {
