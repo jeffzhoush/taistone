@@ -29,9 +29,7 @@ public class DeliverService extends BaseService {
 
 	@Autowired
 	private DeliverDao deliverDao;
-	@Autowired
-	private ProdinfoDao prodinfoDao; 
-	
+
 	public Deliver get(String id) {
 		return deliverDao.get(id);
 	}

@@ -72,8 +72,8 @@
 		<div class="control-group">
 			<label class="control-label">配送品:</label>
 			<div class="controls">
-				<input id="prodinfoid" type="hidden" name="prodinfo.id" value="${deliver.prodinfo.id}" />
-				<input id="prodinfoname" type="text" readonly name="prodinfo.name" value="${deliver.prodinfo.name}" />
+				<input id="prodinfoid" type="hidden" name="deliver.prodinfo.id" value="${deliver.prodinfo.id}" />
+				<input id="prodinfoname" type="text" readonly name="deliver.prodinfo.name" value="${deliver.prodinfo.name}" />
 				<input id="btnprodinfoid" type="button" value="..." >
 				<script type="text/javascript">
 					$("#btnprodinfoid").click(function(){

@@ -38,6 +38,9 @@ public class DeliverController extends BaseController {
 	@Autowired
 	private DeliverService deliverService;
 	
+	@Autowired
+	private ProdinfoService prodinfoService;	
+	
 	@ModelAttribute
 	public Deliver get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
@@ -68,8 +71,9 @@ public class DeliverController extends BaseController {
 
 	@RequiresPermissions("sfd:deliver:edit")
 	@RequestMapping(value = "save")
-	public String save(Deliver deliver, Model model, RedirectAttributes redirectAttributes) {
-		
+	public String save(Deliver deliver, Model model, RedirectAttributes redirectAttributes,HttpServletRequest request) {
+		Prodinfo prodinfo=prodinfoService.get(request.getParameter("deliver.prodinfo.id"));
+		deliver.setProdinfo(prodinfo);
 		if (!beanValidator(model, deliver)){
 			return form(deliver, model);
 		}
