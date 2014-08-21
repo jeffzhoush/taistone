@@ -19,6 +19,8 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
+import com.thinkgem.jeesite.modules.sale.service.prod.ProdinfoService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 import com.demo.sfd.entity.Deliver;
@@ -67,9 +69,11 @@ public class DeliverController extends BaseController {
 	@RequiresPermissions("sfd:deliver:edit")
 	@RequestMapping(value = "save")
 	public String save(Deliver deliver, Model model, RedirectAttributes redirectAttributes) {
+		
 		if (!beanValidator(model, deliver)){
 			return form(deliver, model);
 		}
+		
 		deliverService.save(deliver);
 		addMessage(redirectAttributes, "保存配送单'" + deliver.getName() + "'成功");
 		return "redirect:"+Global.getAdminPath()+"/sfd/deliver/?repage";

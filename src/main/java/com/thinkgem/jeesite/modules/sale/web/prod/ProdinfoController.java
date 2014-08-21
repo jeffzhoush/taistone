@@ -30,6 +30,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.cms.entity.Article;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -74,6 +75,14 @@ public class ProdinfoController extends BaseController {
         model.addAttribute("page", page);
 		return "modules/sale/prod/prodinfoList";
 	}
+	
+	//产品选择列表
+	@RequiresPermissions("sale:prod:prodinfo:view")
+	@RequestMapping(value = "selectList")
+	public String selectList(Prodinfo prodinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
+	        list(prodinfo, request, response, model);
+			return "modules/sale/prod/prodinfoSelectList";
+		}
 
 	@RequiresPermissions("sale:prod:prodinfo:view")
 	@RequestMapping(value = "form")

@@ -83,7 +83,7 @@ public class Deliver extends IdEntity<Deliver> {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="prodinfo_id")
+	@JoinColumn(name="prodinfo_id",updatable=false,insertable=false )
 	public Prodinfo getProdinfo() {
 		return prodinfo;
 	}

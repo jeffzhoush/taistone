@@ -67,12 +67,55 @@
 				<form:input path="address"  />
 			</div>
 		</div>
+		
+		
 		<div class="control-group">
 			<label class="control-label">配送品:</label>
 			<div class="controls">
-				<form:input path="prodinfo.id"  />
+				<input id="prodinfoid" type="hidden" name="prodinfo.id" value="${deliver.prodinfo.id}" />
+				<input id="prodinfoname" type="text" readonly name="prodinfo.name" value="${deliver.prodinfo.name}" />
+				<input id="btnprodinfoid" type="button" value="..." >
+				<script type="text/javascript">
+					$("#btnprodinfoid").click(function(){
+						top.$.jBox.open("iframe:${ctx}/sale/prod/prodinfo/selectList?pageSize=8", "选择商品",800,480,{
+							buttons:{"确定":1,"取消":0,"清除":2}, loaded:function(h){
+								$(".jbox-content", top.document).css("overflow-y","hidden");
+
+								// 获取弹出窗口内容的引用，并初始化为当前值
+								var iframeName = h.children(0).attr("name");
+						        var container = top.window.frames[iframeName].document;
+						        $("#selectedId", container).val($("#prodinfoid").val());
+						        $("#selectedName", container).val($("#prodinfoname").val());
+						        // 默认勾选当前值
+						        $("input[name=id]", container).each(function(){
+						        	var v= $(this).val();
+						        	if(v==$("#prodinfoid").val()){
+						        		$(this).attr('checked',true);
+						        	}else{
+						        		$(this).removeAttr("checked");
+						        	}
+						        });
+							},
+							submit: function (v, h, f) {
+								var iframeName = h.children(0).attr("name");
+						        var container = top.window.frames[iframeName].document;
+								if(v==1){//选中
+									$("#prodinfoid").val($("#selectedId", container).val());
+									$("#prodinfoname").val($("#selectedName", container).val());
+								}else if(v==2){// 清除
+									$("#prodinfoid").val("");
+									$("#prodinfoname").val("");
+								}else{}
+								return true;
+							}
+							
+						});
+					});
+				</script>
 			</div>
 		</div>
+		
+		
 		<div class="control-group">
 			<label class="control-label">终端联系人:</label>
 			<div class="controls">

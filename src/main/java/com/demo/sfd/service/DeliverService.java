@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.sale.dao.prod.ProdinfoDao;
+import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
 import com.demo.sfd.entity.Deliver;
 import com.demo.sfd.dao.DeliverDao;
 
@@ -27,6 +29,8 @@ public class DeliverService extends BaseService {
 
 	@Autowired
 	private DeliverDao deliverDao;
+	@Autowired
+	private ProdinfoDao prodinfoDao; 
 	
 	public Deliver get(String id) {
 		return deliverDao.get(id);
@@ -44,6 +48,7 @@ public class DeliverService extends BaseService {
 	
 	@Transactional(readOnly = false)
 	public void save(Deliver deliver) {
+		deliverDao.getSession().clear();
 		deliverDao.save(deliver);
 	}
 	
