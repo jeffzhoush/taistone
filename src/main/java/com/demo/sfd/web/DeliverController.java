@@ -19,7 +19,9 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.modules.sale.entity.cust.Customerinfo;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
+import com.thinkgem.jeesite.modules.sale.service.cust.CustomerinfoService;
 import com.thinkgem.jeesite.modules.sale.service.prod.ProdinfoService;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -40,6 +42,8 @@ public class DeliverController extends BaseController {
 	
 	@Autowired
 	private ProdinfoService prodinfoService;	
+	@Autowired
+	private CustomerinfoService customerinfoService;
 	
 	@ModelAttribute
 	public Deliver get(@RequestParam(required=false) String id) {
@@ -74,6 +78,10 @@ public class DeliverController extends BaseController {
 	public String save(Deliver deliver, Model model, RedirectAttributes redirectAttributes,HttpServletRequest request) {
 		Prodinfo prodinfo=prodinfoService.get(request.getParameter("deliver.prodinfo.id"));
 		deliver.setProdinfo(prodinfo);
+		
+		Customerinfo customerinfo =customerinfoService.get(request.getParameter("deliver.supply.id"));
+		deliver.setSupply(customerinfo);
+		
 		if (!beanValidator(model, deliver)){
 			return form(deliver, model);
 		}

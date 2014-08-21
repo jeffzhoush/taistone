@@ -57,6 +57,15 @@ public class CustomerinfoController extends BaseController {
 		return "modules/sale/cust/customerinfoList";
 	}
 
+	 //选择列表
+	 @RequiresPermissions("sale:cust:customerinfo:view")
+	 @RequestMapping(value = "selectList")
+	 public String selectList(Customerinfo customerinfo, HttpServletRequest request, HttpServletResponse response, Model model) {
+	         list(customerinfo, request, response, model);
+	   return "modules/sale/cust/customerinfoSelectList";
+	  }
+	
+	
 	@RequiresPermissions("sale:cust:customerinfo:view")
 	@RequestMapping(value = "form")
 	public String form(Customerinfo customerinfo, Model model) {

@@ -34,12 +34,7 @@
 				});
 			});
 			
-		
-			//window.setTimeout($("#selectedId").trigger('change'),5000);
-			
 		});
-		
-		
 		
 		function page(n,s){
 			$("#pageNo").val(n);

@@ -44,11 +44,55 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label">合作商:</label>
+			<label class="control-label">配送品:</label>
 			<div class="controls">
-				<form:input path="supply.id"  />
+				<input id="supplyid" type="hidden" name="deliver.supply.id" value="${deliver.supply.id}" />
+				<input id="supplyname" type="text" readonly name="deliver.supply.name" value="${deliver.supply.name}" />
+				<input id="btnsupplyid" type="button" value="..." >
+				<script type="text/javascript">
+					$("#btnsupplyid").click(function(){
+						top.$.jBox.open("iframe:${ctx}/sale/cust/customerinfo/selectList?pageSize=8", "选择合作商",800,480,{
+							buttons:{"确定":1,"取消":0,"清除":2}, loaded:function(h){
+								$(".jbox-content", top.document).css("overflow-y","hidden");
+
+								// 获取弹出窗口内容的引用，并初始化为当前值
+								var iframeName = h.children(0).attr("name");
+						        var container = top.window.frames[iframeName].document;
+						        $("#selectedId", container).val($("#supplyid").val());
+						        $("#selectedName", container).val($("#supplyname").val());
+						        // 默认勾选当前值
+						        $("input[name=id]", container).each(function(){
+						        	var v= $(this).val();
+						        	if(v==$("#supplyid").val()){
+						        		$(this).attr('checked',true);
+						        	}else{
+						        		$(this).removeAttr("checked");
+						        	}
+						        });
+							},
+							submit: function (v, h, f) {
+								var iframeName = h.children(0).attr("name");
+						        var container = top.window.frames[iframeName].document;
+								if(v==1){//选中
+									$("#supplyid").val($("#selectedId", container).val());
+									$("#supplyname").val($("#selectedName", container).val());
+								}else if(v==2){// 清除
+									$("#supplyid").val("");
+									$("#supplyname").val("");
+								}else{}
+								return true;
+							}
+							
+						});
+					});
+				</script>
 			</div>
 		</div>
+		
+		
+		
+		
+		
 		<div class="control-group">
 			<label class="control-label">终端客户:</label>
 			<div class="controls">
