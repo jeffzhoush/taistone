@@ -49,7 +49,7 @@
 				<td>${deliver.phone}</td>
 				<td>${deliver.prodinfo.name}</td>
 				<td>${deliver.deliveruser.name}</td>
-				<td>${deliver.orderTime}</td>
+				<td><fmt:formatDate value="${deliver.orderTime}" pattern="yyyy-MM-dd"/></td>
 				<td>${fns:getDictLabel(deliver.status, 'sfd_deliver_status', '无')}</td>
 				<td>${deliver.remarks}</td>
 				<td>${deliver.createDate}</td>
