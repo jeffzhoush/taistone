@@ -34,7 +34,7 @@
 		<li class="active"><a href="${ctx}/sfd/deliver/form?id=${deliver.id}">配送单<shiro:hasPermission name="sfd:deliver:edit">${not empty deliver.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sfd:deliver:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="deliver" action="${ctx}/sfd/deliver/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>		
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">配送单号:</label>

@@ -32,7 +32,7 @@
 <body>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/modifyPwd" method="post">
 		<tags:mbmessage content="${message}"/>
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<div data-role="fieldcontain">
 			<label  for="oldPassword">旧密码:</label>
 			<input id="oldPassword" name="oldPassword" type="password" value="" maxlength="50" minlength="3" class="required"/>

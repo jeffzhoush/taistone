@@ -42,7 +42,7 @@
 		<li class="active"><a href="<c:url value='${fns:getAdminPath()}/cms/article/form?id=${article.id}&category.id=${article.category.id}'><c:param name='category.name' value='${article.category.name}'/></c:url>">文章<shiro:hasPermission name="cms:article:edit">${not empty article.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="cms:article:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="article" action="${ctx}/cms/article/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">归属栏目:</label>

@@ -8,6 +8,7 @@ package com.thinkgem.jeesite.modules.sys.web;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -83,7 +84,7 @@ public class RoleController extends BaseController {
 	
 	@RequiresPermissions("sys:role:edit")
 	@RequestMapping(value = "save")
-	public String save(Role role, Model model, String oldName, RedirectAttributes redirectAttributes) {
+	public String save(Role role, Model model, String oldName, RedirectAttributes redirectAttributes,HttpServletRequest request) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";
@@ -95,6 +96,9 @@ public class RoleController extends BaseController {
 			addMessage(model, "保存角色'" + role.getName() + "'失败, 角色名已存在");
 			return form(role, model);
 		}
+		
+		String menuIds=request.getParameter("menuIds");
+		role.setMenuList(systemService.findMenuListByIds(menuIds));
 		systemService.saveRole(role);
 		addMessage(redirectAttributes, "保存角色'" + role.getName() + "'成功");
 		return "redirect:"+Global.getAdminPath()+"/sys/role/?repage";

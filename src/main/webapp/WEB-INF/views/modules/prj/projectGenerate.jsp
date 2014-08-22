@@ -32,7 +32,7 @@
 		<li class="active"><a href="${ctx}/prj/project/generate?id=${project.id}">代码生成</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="project" action="${ctx}/prj/project/generate" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sys/menu/form?id=${menu.id}&parent.id=${menu.parent.id}">菜单<shiro:hasPermission name="sys:menu:edit">${not empty menu.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sys:menu:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="menu" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>

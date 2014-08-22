@@ -32,7 +32,7 @@
 		<shiro:hasPermission name="oa:leave:edit"><li class="active"><a href="${ctx}/oa/leave/form">请假申请</a></li></shiro:hasPermission>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="leave" action="${ctx}/oa/leave/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">请假类型：</label>

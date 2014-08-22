@@ -420,5 +420,9 @@ public class SystemService extends BaseService  {
 	
 	///////////////// Synchronized to the Activiti end //////////////////
 	
+
+	public List<Menu> findMenuListByIds(String menuIds){
+		return menuDao.findMenuListByIds(menuIds);
+	}
 	
 }

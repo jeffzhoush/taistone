@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/cust/customerinfo/form?id=${customerinfo.id}">客户<shiro:hasPermission name="sale:cust:customerinfo:edit">${not empty customerinfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:cust:customerinfo:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="customerinfo" action="${ctx}/sale/cust/customerinfo/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

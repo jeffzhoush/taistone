@@ -34,7 +34,7 @@
 		<li class="active"><a href="${ctx}/sfd/workreport/form?id=${workreport.id}">工作汇报<shiro:hasPermission name="sfd:workreport:edit">${not empty workreport.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sfd:workreport:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="workreport" action="${ctx}/sfd/workreport/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">汇报类型:${workreport.reportType }</label><label class="control-label">汇报人:${workreport.user.name }</label><label class="control-label" style="width:250px">提交时间:${workreport.submitTime }</label>

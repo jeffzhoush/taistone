@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/market/promotionactivity/form?id=${promotionactivity.id}">促销活动<shiro:hasPermission name="sale:market:promotionactivity:edit">${not empty promotionactivity.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:market:promotionactivity:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="promotionactivity" action="${ctx}/sale/market/promotionactivity/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

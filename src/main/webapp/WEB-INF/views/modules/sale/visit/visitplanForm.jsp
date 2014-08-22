@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/visit/visitplan/form?id=${visitplan.id}">拜访计划<shiro:hasPermission name="sale:visit:visitplan:edit">${not empty visitplan.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:visit:visitplan:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="visitplan" action="${ctx}/sale/visit/visitplan/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

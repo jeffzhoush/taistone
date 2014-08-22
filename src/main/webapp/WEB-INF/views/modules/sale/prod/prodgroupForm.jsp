@@ -31,7 +31,7 @@
 		<li class="active"><a href="form?id=${prodgroup.id}&parent.id=${prodgroup.parent.id}">商品类型<shiro:hasPermission name="sale:prod:prodgroup:edit">${not empty prodgroup.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:prod:prodgroup:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="prodgroup" action="${ctx}/sale/prod/prodgroup/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">上级商品类型:</label>

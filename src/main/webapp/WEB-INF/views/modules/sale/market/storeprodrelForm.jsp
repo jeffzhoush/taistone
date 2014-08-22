@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/market/storeprodrel/form?id=${storeprodrel.id}">陈列<shiro:hasPermission name="sale:market:storeprodrel:edit">${not empty storeprodrel.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:market:storeprodrel:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="storeprodrel" action="${ctx}/sale/market/storeprodrel/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

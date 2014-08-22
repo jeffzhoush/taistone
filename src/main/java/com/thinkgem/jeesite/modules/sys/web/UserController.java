@@ -36,6 +36,7 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -50,6 +51,8 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private OfficeService officeService;
 	
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
@@ -114,8 +117,13 @@ public class UserController extends BaseController {
 			return "redirect:"+Global.getAdminPath()+"/sys/user/?repage";
 		}
 		// 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
-		user.setCompany(new Office(request.getParameter("company.id")));
-		user.setOffice(new Office(request.getParameter("office.id")));
+		//user.setCompany(new Office(request.getParameter("company.id")));
+		//user.setOffice(new Office(request.getParameter("office.id")));
+		
+		Office company =officeService.get(request.getParameter("company.id"));
+		Office office =officeService.get(request.getParameter("office.id"));
+		user.setCompany(company);
+		user.setOffice(office);
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(newPassword)) {
 			user.setPassword(SystemService.entryptPassword(newPassword));

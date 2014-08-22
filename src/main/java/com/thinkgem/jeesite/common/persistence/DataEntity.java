@@ -16,6 +16,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
@@ -50,6 +51,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	protected User updateBy;	// 更新者
 	protected Date updateDate;// 更新日期
 	protected String delFlag; // 删除标记（0：正常；1：删除；2：审核）
+	protected Long version ;//乐观锁
 
 	protected Date createDateStart;
 	protected Date createDateEnd;
@@ -182,4 +184,16 @@ public abstract class DataEntity<T> extends BaseEntity<T> implements Serializabl
 	public void setUpdateDateEnd(Date updateDateEnd) {
 		this.updateDateEnd = updateDateEnd;
 	}
+
+	@Version
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
+	
+	
 }

@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/market/carinfo/form?id=${carinfo.id}">车辆<shiro:hasPermission name="sale:market:carinfo:edit">${not empty carinfo.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:market:carinfo:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="carinfo" action="${ctx}/sale/market/carinfo/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>

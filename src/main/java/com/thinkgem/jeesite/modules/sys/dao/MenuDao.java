@@ -33,6 +33,10 @@ public class MenuDao extends BaseDao<Menu> {
 	public List<Menu> findAllList(){
 		return find("from Menu where delFlag=:p1 order by sort", new Parameter(Dict.DEL_FLAG_NORMAL));
 	}
+	public List<Menu> findMenuListByIds(String menuIds){
+		String[] menuidArr=menuIds.split(",");
+		return find("from Menu where delFlag=:p1 and id in (:p2) order by sort", new Parameter(Dict.DEL_FLAG_NORMAL,menuidArr));
+	}
 	
 	public List<Menu> findByUserId(String userId){
 		return find("select distinct m from Menu m, Role r, User u where m in elements (r.menuList) and r in elements (u.roleList)" +

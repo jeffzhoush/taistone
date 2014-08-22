@@ -31,7 +31,7 @@
 		<li class="active"><a href="${ctx}/sale/market/applicationstoredisplay/form?id=${applicationstoredisplay.id}">特陈计划<shiro:hasPermission name="sale:market:applicationstoredisplay:edit">${not empty applicationstoredisplay.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="sale:market:applicationstoredisplay:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="applicationstoredisplay" action="${ctx}/sale/market/applicationstoredisplay/save" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
+		<form:hidden path="id"/><form:hidden path="version"/>
 		<tags:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>
