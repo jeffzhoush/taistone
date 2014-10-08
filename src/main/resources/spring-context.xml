@@ -26,13 +26,13 @@
 		<property name="packagesToScan" value="com.thinkgem.jeesite,com.demo.sfd"/><!-- 如果多个，用“,”分隔 -->
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.search.default.directory_provider">filesystem</prop>
-				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
-				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop> <!-- hibernate4缓存实现类  -->
+				<prop key="net.sf.ehcache.configurationResourceName">${hibernate.ehcache.configFile}</prop> <!--  缓存ehcache配置文件  -->
+				<prop key="hibernate.cache.use_second_level_cache">true</prop> <!-- 开启二级缓存  -->
+				<prop key="hibernate.cache.use_query_cache">true</prop> <!-- 开启查询缓存。 findall()、list()、Iterator()、createCriteria()、createQuery()等方法获得的数据  -->
+				<prop key="hibernate.search.default.directory_provider">filesystem</prop>  <!-- hibernate search 配置  -->
+				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>  <!-- hibernate search 配置  -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop> <!-- 日志中打印出sql语句  -->
 			</props>
 		</property>
 		<property name="namingStrategy">

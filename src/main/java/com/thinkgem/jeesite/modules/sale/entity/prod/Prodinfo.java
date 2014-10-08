@@ -5,12 +5,18 @@ package com.thinkgem.jeesite.modules.sale.entity.prod;
 
 import java.util.Date;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -60,7 +66,10 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.id = id;
 	}
 
-	@Length(min=1, max=200)
+	
+	@Basic(fetch=FetchType.EAGER,optional=false)
+	//@Column(name="name",insertable=true,updatable=true,unique=true,nullable=false,length=255)
+	@Length(min=1, max=255)
 	@ExcelField(title="名称", align=2, sort=10)
 	public String getName() {
 		return name;
@@ -69,6 +78,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 
 	@ExcelField(title="产品编码", align=2, sort=20)
 	public String getLv5id() {
@@ -123,7 +133,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 		this.salesorder = salesorder;
 	}
 
-	@ManyToOne
+	@ManyToOne(optional=false)
 	@JoinColumn(name="prodgroup_id")
 	@NotFound(action = NotFoundAction.IGNORE)
 	@JsonIgnore
@@ -132,6 +142,7 @@ public class Prodinfo extends IdEntity<Prodinfo> {
 	public Prodgroup getProdgroup() {
 		return prodgroup;
 	}
+
 
 	public void setProdgroup(Prodgroup prodgroup) {
 		this.prodgroup = prodgroup;

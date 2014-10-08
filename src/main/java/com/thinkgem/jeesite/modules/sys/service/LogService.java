@@ -39,6 +39,11 @@ public class LogService extends BaseService {
 		return logDao.get(id);
 	}
 	
+	@Transactional(readOnly = false)
+	public void save(Log entity){
+		logDao.save(entity);
+	}
+	
 	public Page<Log> find(Page<Log> page, Map<String, Object> paramMap) {
 		DetachedCriteria dc = logDao.createDetachedCriteria();
 
@@ -69,7 +74,7 @@ public class LogService extends BaseService {
 		}
 		dc.add(Restrictions.between("createDate", beginDate, endDate));
 		
-		dc.addOrder(Order.desc("id"));
+		dc.addOrder(Order.desc("createDate"));
 		return logDao.find(page, dc);
 	}
 	

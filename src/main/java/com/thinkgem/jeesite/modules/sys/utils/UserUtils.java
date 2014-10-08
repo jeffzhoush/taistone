@@ -167,8 +167,14 @@ public class UserUtils extends BaseService {
 		if (prodgroupList == null){
 			User user = getUser();
 			DetachedCriteria dc = prodgroupDao.createDetachedCriteria();
-			dc.add(dataScopeFilter(user, dc.getAlias(), ""));
+			
 			dc.add(Restrictions.eq("delFlag", Prodgroup.DEL_FLAG_NORMAL));
+			
+			// 数据权限过滤。根据所属公司，部门，人员
+			dc.createAlias("createBy", "createBy");
+			dc.createAlias("createBy.office", "office");
+			dc.add(dataScopeFilter(UserUtils.getUser(), "office", "createBy"));
+			
 			dc.addOrder(Order.asc("code"));
 			prodgroupList = prodgroupDao.find(dc);
 			putCache(CACHE_PRODGROUP_LIST, prodgroupList);

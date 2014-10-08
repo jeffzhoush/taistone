@@ -16,6 +16,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sale.entity.prod.Prodinfo;
 import com.thinkgem.jeesite.modules.sale.dao.prod.ProdinfoDao;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
  * 商品信息Service
@@ -39,6 +40,11 @@ public class ProdinfoService extends BaseService {
 			dc.add(Restrictions.like("name", "%"+prodinfo.getName()+"%"));
 		}
 		dc.add(Restrictions.eq(Prodinfo.FIELD_DEL_FLAG, Prodinfo.DEL_FLAG_NORMAL));
+		
+		// 数据权限过滤。根据所属公司，部门，人员
+		dc.createAlias("createBy", "createBy");
+		dc.createAlias("createBy.office", "office");
+		dc.add(dataScopeFilter(UserUtils.getUser(), "office", "createBy"));
 		
 		//dc.addOrder(Order.desc("id"));
 		return prodinfoDao.find(page, dc);

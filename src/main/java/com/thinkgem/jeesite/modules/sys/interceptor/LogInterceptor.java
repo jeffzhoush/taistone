@@ -20,6 +20,7 @@ import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.sys.dao.LogDao;
 import com.thinkgem.jeesite.modules.sys.entity.Log;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.LogService;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 import eu.bitwalker.useragentutils.DeviceType;
@@ -32,7 +33,8 @@ import eu.bitwalker.useragentutils.UserAgent;
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {
 
-	private static LogDao logDao = SpringContextHolder.getBean(LogDao.class);
+	//private static LogDao logDao = SpringContextHolder.getBean(LogDao.class);
+	private static LogService logService = SpringContextHolder.getBean(LogService.class);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
@@ -84,7 +86,8 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 				log.setMethod(request.getMethod());
 				log.setParams(params.toString());
 				log.setException(ex != null ? ex.toString() : "");
-				logDao.save(log);
+				//logDao.save(log);
+				logService.save(log);
 				
 				logger.info("save log {type: {}, loginName: {}, uri: {}}, ", log.getType(), user.getLoginName(), log.getRequestUri());
 				
