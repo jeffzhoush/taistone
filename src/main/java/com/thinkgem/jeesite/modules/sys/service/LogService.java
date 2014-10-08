@@ -47,9 +47,15 @@ public class LogService extends BaseService {
 	public Page<Log> find(Page<Log> page, Map<String, Object> paramMap) {
 		DetachedCriteria dc = logDao.createDetachedCriteria();
 
-		Long createById = StringUtils.toLong(paramMap.get("createById"));
+		/*Long createById = StringUtils.toLong(paramMap.get("createById"));
 		if (createById > 0){
 			dc.add(Restrictions.eq("createBy.id", createById));
+		}*/
+		
+		dc.createAlias("createBy", "createBy");
+		String createByName = ObjectUtils.toString(paramMap.get("createByName"));
+		if (StringUtils.isNotBlank(createByName)){
+			dc.add(Restrictions.like("createBy.name", "%"+createByName+"%"));
 		}
 		
 		String requestUri = ObjectUtils.toString(paramMap.get("requestUri"));
@@ -71,6 +77,8 @@ public class LogService extends BaseService {
 		if (endDate == null){
 			endDate = DateUtils.addDays(DateUtils.addMonths(beginDate, 1), -1);
 			paramMap.put("endDate", DateUtils.formatDate(endDate, "yyyy-MM-dd"));
+		}else{
+			endDate=new Date(endDate.getTime()+24*60*60*1000); // 结束时间+1天
 		}
 		dc.add(Restrictions.between("createDate", beginDate, endDate));
 		
