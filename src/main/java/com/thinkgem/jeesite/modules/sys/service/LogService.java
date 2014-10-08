@@ -49,14 +49,23 @@ public class LogService extends BaseService {
 
 		/*Long createById = StringUtils.toLong(paramMap.get("createById"));
 		if (createById > 0){
-			dc.add(Restrictions.eq("createBy.id", createById));
+			dc.add(Restrictions.eq("createBy.id", createById));  //特殊情况，如果是对引用对象的id查询，则可以不用建立引用，也就是可以不调用createAlias()语句
 		}*/
 		
-		dc.createAlias("createBy", "createBy");
+		dc.createAlias("createBy", "u");
 		String createByName = ObjectUtils.toString(paramMap.get("createByName"));
 		if (StringUtils.isNotBlank(createByName)){
-			dc.add(Restrictions.like("createBy.name", "%"+createByName+"%"));
+			dc.add(Restrictions.like("u.name", "%"+createByName+"%"));
 		}
+		
+		//如果是按照部门名称查询， 需要从createBy->u->office连起来定义createAlias.
+		/*dc.createAlias("u.office", "office");
+		String officeName = ObjectUtils.toString(paramMap.get("officeName"));
+		if (StringUtils.isNotBlank(officeName)){
+			dc.add(Restrictions.like("office.name", "%"+officeName+"%"));
+		}*/
+		
+		
 		
 		String requestUri = ObjectUtils.toString(paramMap.get("requestUri"));
 		if (StringUtils.isNotBlank(requestUri)){
