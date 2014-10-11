@@ -5,7 +5,13 @@
 	
   <display-name>TaiStone</display-name>
   
-  <!-- 激活Tomcat的defaultServlet来处理静态文件 -->
+  <!--  目的：可以正常访问静态文件，不要找不到静态文件报404。  -->
+  <!-- 如何你的DispatcherServlet拦截 *.do这样的URL，就不存在访问不到静态资源的问题。 --> 
+  <!-- 如果你的DispatcherServlet拦截“/”，拦截了所有的请求，同时对*.js,*.jpg的访问也就被拦截了。  -->
+  <!-- 通过激活web服务器的默认servlet,让默认servlet在DispatcherServlet之前拦截，就可以访问静态资源文件了。  -->
+  <!-- 每个资源文件类型配置一个mapping. -->
+  <!-- 注意不同web服务器，它的默认servlet名称不一样。 Tomcat/Jetty/JBoss/GlassFish默认 Servlet的名字 为"default"  --> 
+  <!-- 激活Tomcat的defaultServlet来处理静态文件  -->
   <servlet-mapping>
 	<servlet-name>default</servlet-name>
 	<url-pattern>*.jpg</url-pattern>
@@ -47,6 +53,7 @@
 	 <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
 	</listener> 
   
+  <!-- UTF-8 编码  -->
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -63,6 +70,10 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <!--  OpenSessionInViewFilter主要是保持Session状态，直到request将全部页面发送到客户端，这样就可以解决延迟加载带来的问题  -->
+  <!--  Open Session In View是个双刃剑，放在公网上内容多流量大的网站请慎用。  -->
+  <!--   -->
   <filter>
     <filter-name>openSessionInViewFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
@@ -126,6 +137,10 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   
+  <!-- 配置查看阿里巴巴数据库连接池Druid的监控信息  -->
+  <!-- https://github.com/alibaba/druid  -->
+  <!-- 提供了一个StatViewServlet用于展示Druid的统计信息  -->
+  <!-- 根据配置中的url-pattern来访问内置监控页面，参考以下servlet-mapping配置，内置监控页面的首页是/druid/index.html  -->
   <!-- DruidStatView -->
   <servlet>
     <servlet-name>DruidStatView</servlet-name>
@@ -143,7 +158,7 @@
   <!-- CKFinder -->
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
-    <!--<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>-->
+    <!-- <servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class> -->
     <servlet-class>com.thinkgem.jeesite.common.web.CKFinderConnectorServlet</servlet-class>
     <init-param>
       <param-name>XMLConfig</param-name>
